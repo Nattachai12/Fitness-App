@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-// uncomment the below for proxy challenge
 
 const leaderList = [
   { name: "Anna", id: "a0" },

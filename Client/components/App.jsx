@@ -1,9 +1,11 @@
 import React from 'react'
-
+import LogIn from "./LogIn.jsx";
 function App() {
   return (
-    <div>App</div>
-  )
+    <div>
+      <LogIn />
+    </div>
+  );
 }
 
 export default App
