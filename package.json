@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env nodemon server/server.js\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env nodemon Server/server.js\"",
     "gulp-prod": "node_modules/.bin/gulp prod",
     "gulp-dev": "node_modules/.bin/gulp dev"
   },
@@ -22,9 +22,11 @@
     "browserify": "^17.0.0",
     "express": "^4.12.3",
     "gulp": "^4.0.2",
+    "pg": "^8.7.3",
     "prop-types": "^15.6.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",

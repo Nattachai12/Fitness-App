@@ -1,18 +1,27 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const userController = require('./Controllers/UserController.js');
 
 
-const leaderList = [
-  { name: "Anna", id: "a0" },
-  { name: "Ben", id: "b0" },
-  { name: "Clara", id: "c0" },
-  { name: "David", id: "d0" },
-];
+//parse incoming request to req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/api/leaders", (req, res) => {
-  return res.status(200).send(leaderList);
-});
+
+/*
+if username and password match with database
+  render home page
+  send the url for home page
+*/
+app.post(
+  "/api/users",
+  userController.findUser,
+  userController.createUser,
+  (req, res) => {
+    return res.status(200).json(res.locals.data);
+  }
+);
 
 if (process.env.NODE_ENV === "production") {
   // statically serve everything in the build folder on the route '/build'
@@ -22,5 +31,20 @@ if (process.env.NODE_ENV === "production") {
     return res.status(200).sendFile(path.join(__dirname, "../index.html"));
   });
 }
+
+app.use((req, res) =>
+  res.status(404).send("This is not the page you're looking for...")
+);
+
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: "Express error handler caught unknown middleware error",
+    status: 500,
+    message: { err: "An error occurred" },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
 app.listen(3000); //listens on port 3000 -> http://localhost:3000/

@@ -1,11 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const miniCSS = require("mini-css-extract-plugin");
-const imgPath = "./client/components/bird";
-// const imageminGifsicle = require("imagemin-gifsicle");
-// const imageminPngquant = require("imagemin-pngquant");
-// const imageminSvgo = require("imagemin-svgo");
-// const imageminMozjpeg = require("imagemin-mozjpeg");
 
 module.exports = {
   //
@@ -16,7 +11,27 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
-    // assetModuleFilename: "assets/[name][ext]",
+    //clean the folder build before rebuilding a new file
+    clean: true,
+  },
+  //keep track of where the content came from and it can tell u where the original error comes from
+  devtool: "inline-source-map",
+
+  devServer: {
+    // contentBase: path.resolve(__dirname, 'build'),
+    static: {
+      publicPath: "/build",
+      directory: path.resolve(__dirname, "build"),
+    },
+    port: 8080,
+    //launch the browser when you start web server. Also, opne default browser
+    open: true,
+    hot: true,
+    // watchContentBase: true,
+    proxy: {
+      // "/signup": "http://localhost:3000",
+      "/api": "http://localhost:3000",
+    },
   },
 
   module: {
@@ -43,34 +58,16 @@ module.exports = {
         //sass-loader - Compiles Sass to CSS
         use: [miniCSS.loader, "css-loader", "sass-loader"],
       },
-      // {
-      //   test: /\.(jpg|txt)$/,
-      //   include: path.resolve(__dirname),
-      //   type: "asset/resource",
-      //   generator: {
-      //     filename: "assets/[name][ext]",
-      //   },
-      // },
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: "file-loader",
-          },
-        ],
+        test: /\.(svg|webp|ico|png|jpe?g|gif)$/i,
+        type: 'asset/resource'
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./client/index.html" }), new miniCSS()],
-
-  devServer: {
-    static: {
-      publicPath: "/build",
-      directory: path.resolve(__dirname, "build"),
-    },
-    port: 8080,
-    proxy: {
-      "/api/leaders": "http://localhost:3000",
-    },
-  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "client", "index.html"),
+    }),
+    new miniCSS(),
+  ],
 };
