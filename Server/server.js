@@ -23,6 +23,15 @@ app.post(
   }
 );
 
+app.post("/api/getUser", userController.getUser, (req, res) => {
+  console.log(res.locals.user);
+  return res.status(200).json(res.locals.user);
+});
+
+
+
+
+
 if (process.env.NODE_ENV === "production") {
   // statically serve everything in the build folder on the route '/build'
   app.use("/build", express.static(path.join(__dirname, "../build")));
