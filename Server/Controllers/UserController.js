@@ -3,8 +3,8 @@ const db = require("./../Models/UsersModel.js");
 const userController = {};
 
 userController.findUser = (req, res, next) => {
-  const text = 'SELECT username from users WHERE users.username = $1';
-  const values = [req.body.username];
+  const text = 'SELECT email from users WHERE users.email = $1';
+  const values = [req.body.email];
   db.query(text, values)
     .then(data => {
       if (data.rows.length !== 0) {
@@ -16,10 +16,9 @@ userController.findUser = (req, res, next) => {
 
 userController.createUser = (req, res, next) => {
   //find the user first
-  const {username, password} = req.body;
-  const text = `INSERT INTO users(username, password)
-  VALUES ($1, $2) RETURNING *`;
-  const values = [username, password];
+  const {username, password, birthday, email} = req.body;
+  const text = `INSERT INTO users(username, email, birthday, password) VALUES ($1, $2, $3, $4) RETURNING *;`;
+  const values = [username, email, birthday, password];
   db.query(text, values)
     .then((data) => {
 
