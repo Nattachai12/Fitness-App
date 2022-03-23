@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import pic from './../../Gif/Animhorse.gif';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import fetch from "isomorphic-fetch";
 import FormInput from "./FormInput.jsx";
 
@@ -14,6 +14,8 @@ function Signup() {
   });
   //for backend to send result back
   const [nameError ,setNameError] = useState('');
+  const [redirect, setRedirect] = useState(false);
+
 
   const inputs = [
     {
@@ -76,7 +78,11 @@ function Signup() {
       })
         .then((resp) => resp.json())
         .then((data) => {
+          if (typeof data === 'boolean') {
+            setRedirect(true);
+          } else {
           setNameError(data);
+          }
         })
         .catch((err) => console.log(err));
   };
@@ -85,14 +91,14 @@ function Signup() {
     // using [] for an obj key will allow us to send the value of the variable as a key
     setValues({...values, [e.target.name]: e.target.value});
   }
-  console.log(values);
+  if (redirect) {
+    return <Navigate replace to='/'></Navigate>
+  }
+
   return (
     <div className="formPage">
       <div className="form">
         <form onSubmit={handleSubmit}>
-          <Link to="/">
-            <a className="toLogInPage">Log In</a>
-          </Link>
           <h1 className="formHeader">Register</h1>
           {inputs.map((input) => (
             <FormInput key={input.id} {...input} onChange={onChange} />

@@ -19,7 +19,7 @@ app.post(
   userController.findUser,
   userController.createUser,
   (req, res) => {
-    return res.status(200).json('Signup Successful, go back to log in page');
+    return res.status(200).json(true);
   }
 );
 

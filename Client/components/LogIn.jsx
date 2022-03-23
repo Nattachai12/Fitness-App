@@ -77,8 +77,11 @@ function Login({setUser}) {
       <Link to={"/signup"}>
         <h1>Sign Up</h1>
       </Link>
-      <Link to={'/home'}>
+      <Link to={"/home"}>
         <h1>home</h1>
+      </Link>
+      <Link to={"/createWorkout"}>
+        <h1>createWorkout</h1>
       </Link>
     </div>
   );
