@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Nav from "./Nav.jsx";
 import equipmentList from "./../equipmentList.js";
 import Exercises from "./Exercises.jsx";
+import Popup from "./Popup.jsx";
 import "./../scss/createWorkout.scss";
 
 const axios = require("axios").default;
@@ -39,6 +40,21 @@ function createWorkout() {
 
   const [isGetRes, setIsGetRes] = useState(false);
 
+  const [popup, setPopup] = useState(false);
+
+  const [displayExercise, setDisplayExercise] = useState({
+    back: "",
+    cardio: "",
+    chest: "",
+    "lower arms": "",
+    "lower legs": "",
+    neck: "",
+    shoulders: "",
+    "upper arms": "",
+    "upper legs": "",
+    waist: "",
+  });
+
   // useEffect(() => {
 
   // }, [third])
@@ -62,7 +78,6 @@ function createWorkout() {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response.data);
         //create an obj that has bodyPart as key and empty array as result
         const obj = {
           back: [],
@@ -76,12 +91,17 @@ function createWorkout() {
           "upper legs": [],
           waist: [],
         };
+        const objFordisplayExercise = {};
         //iterate through response.data (array)
         for (const currentExercise of response.data) {
           obj[currentExercise.bodyPart].push(currentExercise);
         }
         setBodyPart(obj);
         setIsGetRes(true);
+        for (const key in obj) {
+          objFordisplayExercise[key] = obj[key][0];
+        }
+        setDisplayExercise(objFordisplayExercise);
         //if response.data[i].bodyPart === ''
         //push it to useState
       })
@@ -94,17 +114,22 @@ function createWorkout() {
   if (isGetRes) {
     let uniqueKey = 1;
     for (const key in bodypart) {
-      console.log("key: ", key);
       if (bodypart[key].length !== 0) {
         arr.push(
-          <Exercises key={uniqueKey} name={key} exerciseList={bodypart[key]} />
+          <Exercises
+            key={uniqueKey}
+            name={key}
+            displayExercise={displayExercise}
+            setDisplayExercise={setDisplayExercise}
+            exerciseList={bodypart[key]}
+          />
         );
         uniqueKey++;
       }
     }
   }
 
-  console.log("filterExercises: ", bodypart);
+  // console.log("displayExercise: ", displayExercise);
   return (
     <div className="createWorkoutPage">
       {/* Nav bar to go to either Calendar or home page */}
@@ -123,6 +148,16 @@ function createWorkout() {
         <input type="submit" value="submit" />
       </form>
       <div className="exerciseList">{arr}</div>
+      {isGetRes ? (
+        <input
+          type="submit"
+          value="create routine"
+          onClick={() => setPopup((prev) => !prev)}
+        />
+      ) : null}
+      {popup ? (
+        <Popup setPopup={setPopup} displayExercise={displayExercise} />
+      ) : null}
     </div>
   );
 }

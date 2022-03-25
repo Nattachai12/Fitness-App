@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-function Exercises({ name, exerciseList }) {
+function Exercises({
+  name,
+  exerciseList,
+  displayExercise,
+  setDisplayExercise,
+}) {
   //exerciseList is an array of obj that looks like this
   /*
 "bodyPart":"cardio"
@@ -16,10 +21,15 @@ function Exercises({ name, exerciseList }) {
     e.preventDefault();
     const random = Math.floor(Math.random() * exerciseList.length);
     setChange(random);
+    setDisplayExercise({
+      ...displayExercise,
+      [exerciseList[0].bodyPart]: exerciseList[random],
+    });
   };
   //pick one random exercises from the list
   const random = Math.floor(Math.random() * exerciseList.length);
   const exercise = exerciseList[change]; //exercise is an obj
+
   return (
     <div className="exercises">
       <h3 className="exerciseName">{name}</h3>

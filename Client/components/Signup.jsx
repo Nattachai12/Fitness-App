@@ -13,9 +13,8 @@ function Signup() {
     confirmPassword: "",
   });
   //for backend to send result back
-  const [nameError ,setNameError] = useState('');
+  const [nameError, setNameError] = useState("");
   const [redirect, setRedirect] = useState(false);
-
 
   const inputs = [
     {
@@ -23,7 +22,8 @@ function Signup() {
       name: "username",
       type: "text",
       placeholder: "Username",
-      errorMessage: "Username should contain between 3-16 characters and should not contain any special characters",
+      errorMessage:
+        "Username should contain between 3-16 characters and should not contain any special characters",
       label: "Username",
       //regex to show when will the error message appear
       pattern: "^[A-Za-z0-9]{3,16}$",
@@ -70,29 +70,29 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/JSON",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (typeof data === 'boolean') {
-            setRedirect(true);
-          } else {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/JSON",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (typeof data === "boolean") {
+          setRedirect(true);
+        } else {
           setNameError(data);
-          }
-        })
-        .catch((err) => console.log(err));
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const onChange = (e) => {
     // using [] for an obj key will allow us to send the value of the variable as a key
-    setValues({...values, [e.target.name]: e.target.value});
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   if (redirect) {
-    return <Navigate replace to='/'></Navigate>
+    return <Navigate replace to="/"></Navigate>;
   }
 
   return (
@@ -112,73 +112,3 @@ function Signup() {
 }
 
 export default Signup;
-
-// const userInput = (init) => {
-//   const [value, setValue] = useState(init);
-//   const onChange = (e) => {
-//     setValue(e.target.value);
-//   };
-//   // console.log('value: ', value);
-//   // return the value with the onChange function instead of setValue function
-//   return [value, onChange];
-// };
-
-// function Signup() {
-//   const findUser = (e) => {
-//     e.preventDefault();
-//     //  check if name is empty
-//     if (userName === "") {
-//       setNameError("required");
-//     } else if (password === "") {
-//       setPsswordError("required");
-//     } else {
-//       const body = { username: userName, password: password };
-//       fetch("/api/users", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "Application/JSON",
-//         },
-//         body: JSON.stringify(body),
-//       })
-//         .then((resp) => resp.json())
-//         .then((data) => {
-//           setNameError(data);
-//         })
-//         .catch((err) => console.log(err));
-//     }
-//   };
-
-//   const [userName, setUsername] = userInput("");
-//   const [password, setPassword] = userInput("");
-//   const [nameError, setNameError] = useState(null);
-//   const [passwordError, setPasswordError] = useState(null);
-//   console.log(userName, password);
-//   return (
-//     <div className="app">
-//       Signup
-//       <form>
-//         <input
-//           name="username"
-//           type="text"
-//           placeholder="username"
-//           value={userName}
-//           onChange={setUsername}
-//         ></input>
-//         {nameError ? <span className="errorMsg">{nameError}</span> : null}
-//         <input
-//           name="password"
-//           type="text"
-//           placeholder={"password"}
-//           value={password}
-//           onChange={setPassword}
-//         ></input>
-//         <Link to={"/"}>
-//           <input type="submit" value="sign up" onClick={findUser}></input>
-//         </Link>
-//       </form>
-//       <Link to={"/"}>
-//         <a>Log In</a>
-//       </Link>
-//     </div>
-//   );
-// }
