@@ -1,8 +1,19 @@
+.equitmentListForm {
+  margin: 100px 20px;
+}
+
 .exerciseList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 .exercises {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border-style: solid;
+}
+
+.exerciseButton {
+  width: 20px;
 }

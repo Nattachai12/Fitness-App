@@ -27,7 +27,9 @@ function Exercises({ name, exerciseList }) {
         <li>{exercise.name}</li>
         <img src={exercise.gifUrl} alt="nothing" />
       </ul>
-      <button onClick={handleClick}>change</button>
+      <button className="exerciseButton" onClick={handleClick}>
+        change
+      </button>
     </div>
   );
 }

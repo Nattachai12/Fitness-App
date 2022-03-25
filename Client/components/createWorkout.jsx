@@ -24,7 +24,18 @@ function createWorkout() {
 
   const [equipment, setEquipment] = useState("assisted");
 
-  const [bodypart, setBodyPart] = useState({});
+  const [bodypart, setBodyPart] = useState({
+    back: [],
+    cardio: [],
+    chest: [],
+    "lower arms": [],
+    "lower legs": [],
+    neck: [],
+    shoulders: [],
+    "upper arms": [],
+    "upper legs": [],
+    waist: [],
+  });
 
   const [isGetRes, setIsGetRes] = useState(false);
 
@@ -38,6 +49,7 @@ function createWorkout() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsGetRes(false);
     const options = {
       method: "GET",
       url: `https://exercisedb.p.rapidapi.com/exercises/equipment/${equipment}`,
