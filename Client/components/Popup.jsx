@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PopupExerciseList from "./PopupExerciseList.jsx";
+import fetch from "isomorphic-fetch";
 import "./../scss/popup.scss";
 
 function Popup({ setPopup, displayExercise }) {
@@ -32,8 +33,18 @@ function Popup({ setPopup, displayExercise }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("saveExercises: ", saveExercises);
-    // console.log("handleSubmit: ", displayExercise);
+    fetch("/api/saveExercise", {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/JSON",
+      },
+      body: JSON.stringify(saveExercises),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log("data; ", data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleRoutineName = (e) => {

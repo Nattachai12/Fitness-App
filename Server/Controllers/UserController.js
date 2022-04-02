@@ -3,20 +3,19 @@ const db = require("./../Models/UsersModel.js");
 const userController = {};
 
 userController.getUser = (req, res, next) => {
-  const text = "SELECT user_id, username, email, birthday from users WHERE users.email = $1 AND users.password = $2";
+  const text =
+    "SELECT user_id, username, email, birthday from users WHERE users.email = $1 AND users.password = $2";
   const values = [req.body.email, req.body.password];
   db.query(text, values)
     .then((data) => {
       if (data.rows.length === 0) {
-        return res
-          .status(200)
-          .json("Wrong username or password");
+        return res.status(200).json("Wrong username or password");
       }
       res.locals.user = {};
       //the database set each value to have 50 char, so we have to trim extra whitespaces.
       for (const key in data.rows[0]) {
-        if (typeof data.rows[0][key] === 'number') {
-          console.log(key)
+        if (typeof data.rows[0][key] === "number") {
+          console.log(key);
           res.locals.user[key] = data.rows[0][key];
           continue;
         }
@@ -31,7 +30,6 @@ userController.getUser = (req, res, next) => {
       })
     );
 };
-
 
 userController.findUser = (req, res, next) => {
   const text = "SELECT email from users WHERE users.email = $1";

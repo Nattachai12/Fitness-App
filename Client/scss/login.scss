@@ -1,0 +1,52 @@
+.loginContent {
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loginHeader {
+  color:rebeccapurple;
+}
+
+.loginButton {
+  height: 50px;
+  padding: 10px;
+  border: none;
+  background-color: rebeccapurple;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.loginButton:hover {
+  background-color: rgb(238, 215, 251);
+  color: rebeccapurple;
+  transition: all 0.2s;
+}
+
+.loginRoute {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links {
+  display: flex;
+}
+
+.link {
+  // position: absolute;
+  margin-right: 5px;
+  bottom: 0;
+}

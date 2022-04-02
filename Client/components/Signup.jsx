@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 // import pic from './../../Gif/Animhorse.gif';
 import { Link, Navigate } from "react-router-dom";
-import fetch from "isomorphic-fetch";
 import FormInput from "./FormInput.jsx";
+import axios from 'axios';
 
-function Signup() {
+function Signup({ userInput, username, email, birthday, password }) {
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -66,22 +66,16 @@ function Signup() {
     },
   ];
 
-  //function for onSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/JSON",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        if (typeof data === "boolean") {
+    axios
+      .post("/api/users", values)
+      .then((res) => {
+        console.log(res.data);
+        if (typeof res.data === "boolean") {
           setRedirect(true);
         } else {
-          setNameError(data);
+          setNameError(res.data);
         }
       })
       .catch((err) => console.log(err));

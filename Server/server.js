@@ -1,13 +1,12 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const userController = require('./Controllers/UserController.js');
-
+const userController = require("./Controllers/UserController.js");
+const routineController = require("./Controllers/RoutineController.js");
 
 //parse incoming request to req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 /*
 if username and password match with database
@@ -28,9 +27,7 @@ app.post("/api/getUser", userController.getUser, (req, res) => {
   return res.status(200).json(res.locals.user);
 });
 
-
-
-
+app.post("/api/saveExercise", routineController.createRoutine);
 
 if (process.env.NODE_ENV === "production") {
   // statically serve everything in the build folder on the route '/build'
