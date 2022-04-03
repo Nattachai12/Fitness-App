@@ -36,7 +36,7 @@ function Login({ userInput, email, password }) {
   if (error.redirect) {
     return <Navigate replace to="/home" />;
   }
-  console.log(email, password);
+
   return (
     <div className="logInContent">
       <h1 className="loginHeader">Last Minute Workout Generator</h1>

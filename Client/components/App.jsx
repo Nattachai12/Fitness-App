@@ -22,9 +22,9 @@ const mapDispatchToProps = (dispatch) => ({
 function App(props) {
   const [user, setUser] = useState({});
   console.log(props);
-  useEffect(() => {
-    window.localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("user", JSON.stringify(user));
+  // }, [user]);
 
   return (
     <div className="router">

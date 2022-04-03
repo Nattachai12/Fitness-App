@@ -12,7 +12,7 @@ const userStateReducer = (state = initialState, action) => {
 
     case types.USER_INPUT: {
       return {
-        ...initialState,
+        ...state,
         [action.payload[0]]: action.payload[1],
       }
     }

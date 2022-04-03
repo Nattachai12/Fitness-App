@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-// import pic from './../../Gif/Animhorse.gif';
 import { Link, Navigate } from "react-router-dom";
 import FormInput from "./FormInput.jsx";
 import axios from 'axios';
 
 function Signup({ userInput, username, email, birthday, password }) {
-  const [values, setValues] = useState({
-    username: "",
-    email: "",
-    birthday: "",
-    password: "",
-    confirmPassword: "",
-  });
-  //for backend to send result back
+
+
   const [nameError, setNameError] = useState("");
   const [redirect, setRedirect] = useState(false);
 
@@ -61,13 +54,15 @@ function Signup({ userInput, username, email, birthday, password }) {
       placeholder: "ConfirmPassword",
       errorMessage: "Passwords don't match",
       label: "ConfirmPassword",
-      pattern: values.password,
+      pattern: password,
       required: true,
     },
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const values = {username: username, email: email, birthday: birthday, password: password}
+
     axios
       .post("/api/users", values)
       .then((res) => {
@@ -82,9 +77,11 @@ function Signup({ userInput, username, email, birthday, password }) {
   };
 
   const onChange = (e) => {
-    // using [] for an obj key will allow us to send the value of the variable as a key
-    setValues({ ...values, [e.target.name]: e.target.value });
+    if (e.target.name !== "confirmPassword") {
+     userInput(e);
+    }
   };
+
   if (redirect) {
     return <Navigate replace to="/"></Navigate>;
   }

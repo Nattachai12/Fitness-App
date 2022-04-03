@@ -4,7 +4,8 @@ import Nav from "./Nav.jsx";
 import "./../scss/home.scss";
 
 function Home() {
-  const {user_id, username, birthday, email} = JSON.parse(window.localStorage.getItem("user"));
+  // console.log(username);
+  // const {user_id, username, birthday, email} = JSON.parse(window.localStorage.getItem("user"));
   return (
     <div className="homepage">
       <Nav username={username}></Nav>
